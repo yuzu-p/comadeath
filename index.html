@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table td {
+      text-align: center;
+    }
+    input {
+      width: 30px;
+      height: 30px;
+    }
+    .box {
+      display: flex;
+    }
+    button {
+    height: 30PX;
+     background-color: white;
+     color: black;
+     border: 1px black solid;
+     margin-right: 2px;
+     padding: 0 2 0 2;
+     font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <p>작동 오류가 있을 수도....</p>
+  <button onclick="addRow()">행추가</button>
+  <button onclick="addColumn()">열추가</button>
+  <button onclick="deleteColumn()">열삭제</button>
+  <div id="boxWrap">
+    <div class="box">
+      <table id="tbl">
+        <tr>
+          <td><input type="text" name="" id=""></td>
+          <td><input type="text" name="" id=""></td>
+        </tr>
+      </table>
+      <button onclick="moveleft('#tbl')">순방향</button>
+      <button onclick="move('#tbl')">역방향</button>
+    </div>
+
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+  <script>
+    function moveleft(tablename) {
+      var table = document.querySelector(tablename);
+      var tr = table.rows;
+
+      for (var i = 0; i < tr.length; i++) {
+        tr[i].insertBefore(tr[i].lastElementChild, tr[i].firstElementChild);
+      }
+    }
+
+    function move(tablename) {
+      var table = document.querySelector(tablename);
+      var tr = table.rows;
+
+      for (var i = 0; i < tr.length; i++) {
+        tr[i].appendChild(tr[i].firstElementChild);
+      }
+    }
+
+  function addColumn() {
+  const table = document.querySelectorAll('table');
+  for(let i = 0; i < table.length; i++) {
+    for(let j = 0; j < table[i].rows.length; j++)  {
+    const newCell = table[i].rows[j].insertCell(-1);
+    newCell.innerHTML = '<input type="text" name="" id="">';
+    }
+  }
+  }
+  function deleteColumn() {
+  const table = document.querySelectorAll('table');
+
+  for(let i = 0; i < table.length; i++) {
+    for(let j = 0; j < table[i].rows.length; j++)  {
+    const newCell = table[i].rows[j].deleteCell(-1);
+    }
+  }
+}
+
+function addRow() {
+  const table = document.querySelectorAll('table');
+  const tbnum = table.length + 1;
+  var total = $('#tbl td').length;
+
+  let str = '<div class="box">';
+    str += '<table id="tb' + tbnum + '"><tr>'
+  for (let i = 0; i < total; i++) {
+    str += '<td><input type="text" name="" id=""></td>';
+  }
+
+  str += '</tr></table><button onclick="moveleft(\'#tb' + tbnum + '\')">순방향</button><button onclick="move(\'#tb' + tbnum + '\')">역방향</button>'
+  $("#boxWrap").append(str);
+}
+  </script>
+</body>
+
+</html>
